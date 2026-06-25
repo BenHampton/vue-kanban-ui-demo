@@ -9,7 +9,7 @@ async function json<T>(res: Response): Promise<T> {
   return res.status === 204 ? (undefined as T) : res.json()
 }
 
-export const taskApi = {
+export const tasksApi = {
   list: () => {
     return fetch(BASE)
       .then(json<Task[]>)
