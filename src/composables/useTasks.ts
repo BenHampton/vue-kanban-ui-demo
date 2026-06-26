@@ -4,7 +4,7 @@ import type { NewTaskInput, Task, TaskPatch } from '@/types/task.ts'
 
 const KEYS = { all: ['tasks'] as const }
 
-export function useTaskQuery() {
+export function useTasksQuery() {
   return useQuery({
     queryKey: KEYS.all,
     queryFn: tasksApi.list,
