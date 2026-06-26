@@ -14,7 +14,7 @@ export type NewTaskInput = Pick<Task, 'title' | 'description' | 'status'>
 export type TaskPatch = Partial<Pick<Task, 'title' | 'description' | 'status' | 'order'>>
 
 export const STATUSES: { value: TaskStatus; label: string }[] = [
-  { value: 'todo',        label: 'Todo' },
+  { value: 'todo', label: 'Todo' },
   { value: 'in_progress', label: 'In Progress' },
-  { value: 'done',        label: 'Done' },
+  { value: 'done', label: 'Done' },
 ]

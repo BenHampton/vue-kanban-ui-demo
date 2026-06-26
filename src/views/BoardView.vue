@@ -3,10 +3,9 @@ import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import BoardColumn from '@/components/BoardColumn.vue'
 import TaskFormModal from '@/components/TaskFormModal.vue'
+import BaseButton from '@/components/BaseButton.vue'
 import { useBoardUiStore } from '@/stores/boardUi'
-import {
-  useTasksQuery, useCreateTask, useUpdateTask, useDeleteTask,
-} from '@/composables/useTasks'
+import { useTasksQuery, useCreateTask, useUpdateTask, useDeleteTask } from '@/composables/useTasks'
 import { STATUSES } from '@/types/task'
 import type { NewTaskInput, TaskStatus } from '@/types/task'
 
@@ -18,17 +17,15 @@ const deleteTask = useDeleteTask()
 
 // --- CLIENT STATE (Pinia) ---
 const ui = useBoardUiStore()
-const { search, statusFilter, editingTaskId, isCreating, isModalOpen } = storeToRefs(ui)
+const { search, statusFilter, editingTaskId, isModalOpen } = storeToRefs(ui)
 
 // --- DERIVED STATE (computed == useMemo) ---
 // Filter by search + status, then group into columns by status.
 const filtered = computed(() =>
   (tasks.value ?? []).filter((t) => {
     const matchesSearch =
-      !search.value ||
-      t.title.toLowerCase().includes(search.value.toLowerCase())
-    const matchesStatus =
-      statusFilter.value === 'all' || t.status === statusFilter.value
+      !search.value || t.title.toLowerCase().includes(search.value.toLowerCase())
+    const matchesStatus = statusFilter.value === 'all' || t.status === statusFilter.value
     return matchesSearch && matchesStatus
   }),
 )
@@ -36,9 +33,7 @@ const filtered = computed(() =>
 const columns = computed(() =>
   STATUSES.map((s) => ({
     ...s,
-    tasks: filtered.value
-      .filter((t) => t.status === s.value)
-      .sort((a, b) => a.order - b.order),
+    tasks: filtered.value.filter((t) => t.status === s.value).sort((a, b) => a.order - b.order),
   })),
 )
 
@@ -68,25 +63,20 @@ function handleSubmit(input: NewTaskInput) {
 </script>
 
 <template>
-  <div class="board-page">
+  <div class="boardPage">
     <!-- Toolbar: client-state controls -->
     <div class="toolbar">
-      <input
-        v-model="search"
-        class="toolbar__search"
-        type="search"
-        placeholder="Search tasks…"
-      />
-      <select v-model="statusFilter" class="toolbar__filter">
+      <input v-model="search" class="toolbarSearch" type="search" placeholder="Search tasks…" />
+      <select v-model="statusFilter" class="toolbarFilter">
         <option value="all">All statuses</option>
         <option v-for="s in STATUSES" :key="s.value" :value="s.value">{{ s.label }}</option>
       </select>
-      <button class="btn btn--primary" @click="ui.openCreate()">+ New task</button>
+      <BaseButton variant="primary" @click="ui.openCreate()">+ New task</BaseButton>
     </div>
 
     <!-- Loading / error / data states from Query -->
-    <p v-if="isLoading" class="state-msg">Loading board…</p>
-    <p v-else-if="isError" class="state-msg state-msg--error">
+    <p v-if="isLoading" class="stateMsg">Loading board…</p>
+    <p v-else-if="isError" class="stateMsg stateMsgError">
       Couldn't load tasks. Check the mock worker is running.
     </p>
 

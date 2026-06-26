@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import BoardView from '@/views/BoardView.vue'
+import BaseButton from '@/components/BaseButton.vue'
 import { useBoardUiStore } from '@/stores/boardUi'
 const ui = useBoardUiStore()
 </script>
 
 <template>
-  <div :class="['app', `theme--${ui.theme}`]">
-    <header class="app__bar">
-      <h1 class="app__brand">Kanban<span>·prototype</span></h1>
-      <button class="btn btn--ghost" @click="ui.toggleTheme()">Toggle theme</button>
+  <div :class="['app', ui.theme === 'dark' ? 'themeDark' : 'themeLight']">
+    <header class="appBar">
+      <h1 class="appBrand">Kanban<span>·prototype</span></h1>
+      <BaseButton variant="ghost" @click="ui.toggleTheme()">Toggle theme</BaseButton>
     </header>
     <main><BoardView /></main>
   </div>

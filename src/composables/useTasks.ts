@@ -31,17 +31,16 @@ export function useDeleteTask() {
 export function useUpdateTask() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, patch }: { id: string; patch: TaskPatch }) =>
-      tasksApi.update(id, patch),
+    mutationFn: ({ id, patch }: { id: string; patch: TaskPatch }) => tasksApi.update(id, patch),
 
     // 1. onMutate runs BEFORE the request. Apply the change to the cache now.
     onMutate: async ({ id, patch }) => {
-      await qc.cancelQueries({ queryKey: KEYS.all })        // stop in-flight refetches
-      const previous = qc.getQueryData<Task[]>(KEYS.all)    // snapshot for rollback
+      await qc.cancelQueries({ queryKey: KEYS.all }) // stop in-flight refetches
+      const previous = qc.getQueryData<Task[]>(KEYS.all) // snapshot for rollback
       qc.setQueryData<Task[]>(KEYS.all, (old) =>
         (old ?? []).map((t) => (t.id === id ? { ...t, ...patch } : t)),
       )
-      return { previous }  // becomes `context` below
+      return { previous } // becomes `context` below
     },
 
     // 2. onError runs if the request fails. Roll back to the snapshot.

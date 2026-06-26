@@ -11,8 +11,7 @@ async function json<T>(res: Response): Promise<T> {
 
 export const tasksApi = {
   list: () => {
-    return fetch(BASE)
-      .then(json<Task[]>)
+    return fetch(BASE).then(json<Task[]>)
   },
 
   create: (input: NewTaskInput) =>
@@ -29,6 +28,5 @@ export const tasksApi = {
       body: JSON.stringify(patch),
     }).then(json<Task>),
 
-  remove: (id: string) =>
-    fetch(`${BASE}/${id}`, { method: 'DELETE' }).then(json<void>),
+  remove: (id: string) => fetch(`${BASE}/${id}`, { method: 'DELETE' }).then(json<void>),
 }

@@ -3,7 +3,6 @@ import { computed, ref } from 'vue'
 import type { TaskStatus } from '@/types/task.ts'
 
 export const useBoardUiStore = defineStore('boardUi', () => {
-
   // state
   const theme = ref<'dark' | 'light'>('dark')
   const search = ref('')
@@ -21,12 +20,12 @@ export const useBoardUiStore = defineStore('boardUi', () => {
   }
 
   function openEdit(id: string) {
-    editingTaskId.value = id;
+    editingTaskId.value = id
     isCreating.value = false
   }
 
   function closeModal() {
-    isCreating.value = false;
+    isCreating.value = false
     editingTaskId.value = null
   }
 
@@ -35,7 +34,7 @@ export const useBoardUiStore = defineStore('boardUi', () => {
     theme.value = theme.value === 'dark' ? 'light' : 'dark'
   }
 
-  return{
+  return {
     theme,
     search,
     statusFilter,

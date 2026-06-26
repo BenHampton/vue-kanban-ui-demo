@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
+import BaseButton from '@/components/BaseButton.vue'
 import { STATUSES } from '@/types/task'
 import type { Task, NewTaskInput, TaskStatus } from '@/types/task'
 
@@ -36,9 +37,9 @@ function handleSubmit() {
 </script>
 
 <template>
-  <div class="modal__backdrop" @click.self="emit('close')">
+  <div class="modalBackdrop" @click.self="emit('close')">
     <div class="modal">
-      <h3 class="modal__title">{{ task ? 'Edit task' : 'New task' }}</h3>
+      <h3 class="modalTitle">{{ task ? 'Edit task' : 'New task' }}</h3>
 
       <label class="field">
         <span>Title</span>
@@ -58,12 +59,47 @@ function handleSubmit() {
         </select>
       </label>
 
-      <div class="modal__actions">
-        <button class="btn btn--ghost" @click="emit('close')">Cancel</button>
-        <button class="btn btn--primary" @click="handleSubmit">
+      <div class="modalActions">
+        <BaseButton variant="ghost" @click="emit('close')">Cancel</BaseButton>
+        <BaseButton variant="primary" @click="handleSubmit">
           {{ task ? 'Save' : 'Create' }}
-        </button>
+        </BaseButton>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  padding: var(--sp-4);
+}
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--sp-6);
+  width: min(440px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.field span {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sp-3);
+}
+</style>

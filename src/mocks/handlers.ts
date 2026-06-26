@@ -46,9 +46,4 @@ const deleteTaskById = () => {
     return new HttpResponse(null, { status: 204 })
   })
 }
-export const handlers = [
-  findAllTasks(),
-  findTaskById(),
-  createTask(),
-  deleteTaskById()
-]
+export const handlers = [findAllTasks(), findTaskById(), createTask(), deleteTaskById()]
