@@ -53,9 +53,11 @@ export const db = {
   },
   update: (id: string, patch: Partial<Task>) => {
     const i = tasks.findIndex((t) => t.id === id)
-    if (i === -1) return undefined
-    tasks[i] = { ...tasks[i], ...patch }
-    return tasks[i]
+    const current = tasks[i]
+    if (!current) return undefined
+    const next = { ...current, ...patch }
+    tasks[i] = next
+    return next
   },
   remove: (id: string) => {
     tasks = tasks.filter((t) => t.id !== id)

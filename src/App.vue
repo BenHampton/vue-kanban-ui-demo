@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BoardView from '@/views/BoardView.vue'
+import { RouterView } from 'vue-router'
 import BaseButton from '@/components/BaseButton.vue'
 import { useBoardUiStore } from '@/stores/boardUi'
 const ui = useBoardUiStore()
@@ -11,6 +11,6 @@ const ui = useBoardUiStore()
       <h1 class="appBrand">Kanban<span>·prototype</span></h1>
       <BaseButton variant="ghost" @click="ui.toggleTheme()">Toggle theme</BaseButton>
     </header>
-    <main><BoardView /></main>
+    <main><RouterView /></main>
   </div>
 </template>

@@ -30,7 +30,6 @@ export const useBoardUiStore = defineStore('boardUi', () => {
   }
 
   function toggleTheme() {
-    console.log('INSIDE')
     theme.value = theme.value === 'dark' ? 'light' : 'dark'
   }
 

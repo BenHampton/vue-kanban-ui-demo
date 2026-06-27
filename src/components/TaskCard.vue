@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import type { Task } from '@/types/task'
 
 defineProps<{ task: Task }>()
@@ -12,7 +13,11 @@ const emit = defineEmits<{
 <template>
   <article class="card">
     <header class="cardHead">
-      <h4>{{ task.title }}</h4>
+      <h4>
+        <RouterLink class="cardLink" :to="{ name: 'task', params: { id: task.id } }">
+          {{ task.title }}
+        </RouterLink>
+      </h4>
       <div class="cardActions">
         <button class="iconBtn" title="Edit" @click="emit('edit', task.id)">Edit</button>
         <button class="iconBtn" title="Delete" @click="emit('delete', task.id)">Delete</button>
@@ -46,6 +51,13 @@ const emit = defineEmits<{
   margin: var(--sp-2) 0 0;
   color: var(--text-dim);
   font-size: 13px;
+}
+.cardLink {
+  color: inherit;
+  text-decoration: none;
+}
+.cardLink:hover {
+  text-decoration: underline;
 }
 .cardActions {
   display: flex;
